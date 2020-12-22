@@ -1,9 +1,10 @@
 import React from 'react';
 import GlobalStyle from './styles/global';
-import SignIn from './pages/SignIn';
-// import SignUp from './pages/SignUp';
-import { AuthProvider } from './hooks/AuthContext';
-import Toast from './components/Toast';
+import AppProvider from './hooks';
+import Routes from './routes';
+import { BrowserRouter } from 'react-router-dom';
+
+
 
 function App() {
 
@@ -11,16 +12,14 @@ function App() {
 
 
   return (
-    <>
 
-      <AuthProvider>
-        <SignIn />
-      </AuthProvider>
-
-      <Toast />
-      
+    <BrowserRouter>
+      <AppProvider>
+        <Routes />
+      </AppProvider>
       <GlobalStyle />
-    </>
+    </BrowserRouter>
+
 
   );
 }

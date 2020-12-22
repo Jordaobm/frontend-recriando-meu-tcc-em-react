@@ -1,7 +1,8 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
-import signUpBackground from '../../assets/signupbackground.jpg';
+import signInBackground from '../../assets/background.png';
+
 
 
 
@@ -12,14 +13,42 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
+  
+
+  place-content: center;
+  width: 100%;
+  max-width: 700px;
+  
+`;
+
+export const Background = styled.div`
+  flex: 1;
+  background: url(${signInBackground}) no-repeat center;
+  background-size: cover;
+`;
+
+
+const appearFromBottom = keyframes`
+  from {
+    opacity:0;
+    transform:translateY(20px);
+  } to {
+    opacity:1;
+    transform:translateY(0px);
+  }
+
+`;
+
+export const AnimationContainer = styled.div`
+  
   display: flex;
   flex-direction: column;
   align-items: center;
-  place-content: center;
-  width: 100%;
-  max-width: 650px;
-  form {
-    margin: 80px 0;
+
+  animation:${appearFromBottom} 1s;
+
+form {
+    margin: 50px 0;
     width: 340px;
     text-align: center;
     h1 {
@@ -54,10 +83,7 @@ export const Content = styled.div`
       color: ${shade(0.2, '#5fbf00')};
     }
   }
-`;
 
-export const Background = styled.div`
-  flex: 1;
-  background: url(${signUpBackground}) no-repeat center;
-  background-size: cover;
+
+
 `;

@@ -1,48 +1,34 @@
 import React from 'react';
-import { Container, ToastContent } from './styles';
-import { FiAlertCircle, FiXCircle } from 'react-icons/fi';
+import { useTransition } from 'react-spring';
 
+import ToastChildren from './ToastChildren';
 
-const Toast: React.FC = () => {
+import { ToastMessage } from '../../hooks/toast';
+import { Container } from './styles';
 
-
-    return (
-        <Container>
-            <ToastContent type="info" hasDescription>
-
-                <FiAlertCircle size={20} />
-                <div>
-                    <strong>Aconteceu um erro</strong>
-                    <p>Não foi possível fazer login na aplicação</p>
-                </div>
-                <button type='button'><FiXCircle size={18} /></button>
-
-
-            </ToastContent>
-
-            <ToastContent type="success"hasDescription={false}> 
-
-                <FiAlertCircle size={20} />
-                <div>
-                    <strong>Sucesso</strong>
-                </div>
-                <button type='button'><FiXCircle size={18} /></button>
-
-
-            </ToastContent>
-
-            <ToastContent type="error" hasDescription={false}>
-
-                <FiAlertCircle size={20} />
-                <div>
-                    <strong>Aconteceu um erro</strong>
-                </div>
-                <button type='button'><FiXCircle size={18} /></button>
-
-
-            </ToastContent>
-        </Container>
-    )
+interface ToastContainerProps {
+  messages: ToastMessage[];
 }
 
-export default Toast;
+const ToastContainer: React.FC<ToastContainerProps> = ({ messages }) => {
+
+  const messagesWithTransitions = useTransition(
+    messages,
+    message => message.id,
+    {
+      from: {right:'-120%', opacity: 0},
+      enter:{right:'0%', opacity: 1},
+      leave:{right:'-120%', opacity: 0},
+    }
+  );
+
+  return (
+    <Container>
+      {messagesWithTransitions.map(({item, key, props}) => (
+        <ToastChildren style={props} key={key} message={item} />
+      ))}
+    </Container>
+  );
+};
+
+export default ToastContainer;

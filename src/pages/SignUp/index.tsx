@@ -62,7 +62,7 @@ const SignUp: React.FC = () => {
         description:'Você já pode fazer seu logon!'
       })
 
-      history.push('/')
+      history.push('/signin')
 
 
       
@@ -110,7 +110,7 @@ const SignUp: React.FC = () => {
 
           </Form>
 
-          <Link to='/'>
+          <Link to='/signin'>
             <FiArrowLeft />
           Voltar para logon
         </Link>

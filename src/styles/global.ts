@@ -8,7 +8,7 @@ export default createGlobalStyle`
     outline: 0;
   }
   body {
-    background: #ededed;
+    background: var(--jadri-color-1-hex);
     color: black;
     -webkit-font-smoothing: antialiased;
   }
@@ -22,4 +22,33 @@ export default createGlobalStyle`
   button {
     cursor: pointer;
   }
+
+  :root {
+    --background-color:#;
+    --text-primary: blue;
+  }
+:root{
+  
+/* Color Theme Swatches in Hex */
+
+  --jadri-color-1-hex: #FAFAFA;
+  --jadri-color-2-hex: #FAC255;
+  --jadri-color-3-hex: #74DBD7;
+  --jadri-color-4-hex: #8DDB46;
+  --jadri-color-5-hex: #6E42F5;
+  
+
+  /* Color Cards */
+
+  --jadri-color-cards: #F0F0F5;
+
+  /* Color Text */
+
+  --jadri-color-text-1-hex:#020202;
+  --jadri-color-text-success: #8DDB46;
+  --jadri-color-text-error:#C94D3F;
+
+
+
+}
 `;

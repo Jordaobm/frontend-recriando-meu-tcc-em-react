@@ -57,20 +57,20 @@ form {
     
     
     a {
-      color: #5fbf00;
+      color: var(--jadri-color-4-hex);
       display: block;
       margin-top: 24px;
       text-decoration: none;
       transition: color 0.2s;
       &:hover {
-        color: ${shade(0.2, '#5fbf00')};
+        color: ${shade(0.2, '#8DDB46')};
       }
     }
   }
   > a {
     position:relative;
     top:-20px;
-    color: #5fbf00;
+    color:var(--jadri-color-4-hex);
     display: block;
     text-decoration: none;
     transition: color 0.2s;
@@ -80,7 +80,7 @@ form {
       margin-right: 16px;
     }
     &:hover {
-      color: ${shade(0.2, '#5fbf00')};
+      color: ${shade(0.2, '#8DDB46')};
     }
   }
 

@@ -1,3 +1,4 @@
+import { shade } from 'polished';
 import styled from 'styled-components';
 import parallaxImage from '../../assets/parallax-image-home.jpg';
 
@@ -57,12 +58,24 @@ export const SectionCards = styled.div`
 
 `;
 
-export const CardContainer = styled.div`
+
+interface CardContainerProps {
+    available: boolean;
+}
+
+export const CardContainer = styled.div<CardContainerProps>`
     /* background:red; */
     /* margin:20px 0; */
     margin:30px;
     background:var(--jadri-color-cards);
     border-radius: 8px;
+    border:2px solid var(--jadri-color-cards);
+    transition:0.2s;
+
+    &:hover {
+        border:2px solid ${({ available }: CardContainerProps): string => (available ? '#8DDB46' : '#C94D3F')};
+    };
+
 
 `;
 
@@ -124,7 +137,6 @@ export const ProductDescription = styled.div`
 
     img {
         width:200px;
-        
     }
     
 
@@ -143,6 +155,47 @@ export const ProductDescription = styled.div`
     }
 
 `;
+
+interface ButtonProps {
+    available: boolean;
+}
+
+export const Button = styled.button`
+
+
+        position:relative;
+        bottom:0;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        text-decoration:none;
+        background:${({ available }: CardContainerProps): string => (available ? '#8DDB46' : '#C94D3F')};
+
+        height: 35px;
+        border-radius: 10px;
+        border: 0;
+        padding: 0 16px;
+        color: #fff;
+        width: 100%;
+        font-weight: 500;
+        margin-top: 16px;
+        transition: 0.2s;
+
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 30px;
+        
+
+
+
+        &:hover {
+            background: ${({ available }: CardContainerProps): string => (available ? '#74b538' : '#ab4135')};
+        };
+
+`;
+
+
 
 
 

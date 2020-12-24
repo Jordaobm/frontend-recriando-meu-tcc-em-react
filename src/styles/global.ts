@@ -45,8 +45,12 @@ export default createGlobalStyle`
   /* Color Text */
 
   --jadri-color-text-1-hex:#020202;
+
   --jadri-color-text-success: #8DDB46;
+  --jadri-color-text-success-shade: #74b538;
   --jadri-color-text-error:#C94D3F;
+  --jadri-color-text-error-shade:#ab4135;
+
 
 
 

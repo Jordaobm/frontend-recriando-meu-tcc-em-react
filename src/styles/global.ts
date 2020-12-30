@@ -50,7 +50,7 @@ export default createGlobalStyle`
   --jadri-color-text-success-shade: #74b538;
   --jadri-color-text-error:#C94D3F;
   --jadri-color-text-error-shade:#ab4135;
-
+  --jadri-color-text-gray:#666;
 
 
 

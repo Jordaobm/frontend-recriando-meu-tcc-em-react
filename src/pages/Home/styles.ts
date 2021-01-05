@@ -60,6 +60,7 @@ export const CardCategory = styled.div`
     border-radius:10px;
 
     h3{
+        text-transform: uppercase;
         margin-bottom:20px;
         font-style: normal;
         font-weight: 500;
@@ -238,11 +239,18 @@ export const TitleWeather = styled.div`
         line-height: 20px;
     }
 
+    h5{
+        margin-top:5px;
+    }
+
 `;
 
 
 
-export const WeatherContent = styled.div``;
+export const WeatherContent = styled.div`
+    width:100%;
+
+`;
 
 
 
@@ -266,7 +274,7 @@ export const TitleAgriculturalQuotation = styled.div`
 
 export const AgriculturalQuotationContent = styled.div`
 
-    margin:20px 0;
+    margin:57px 0;
 
     iframe{
         border:0;
@@ -274,8 +282,129 @@ export const AgriculturalQuotationContent = styled.div`
 
 `;
 
+export const CardWeatherPrimayAndSecondDay = styled.div`
+    display:flex;
+    flex-direction:column;
+    padding:10px 0;
+    color:var(-jadri-color-text-1-hex);
+    border-top:2px solid var(--jadri-color-1-hex);
+    transition:0.2s;
+
+    :hover{
+        border-top:2px solid var(--jadri-color-4-hex);
+    }
+`;
+
+
+export const SectionCardsWeatherPrimaryAndSecondDay = styled.div`
+    margin-top:40px;
+    grid-gap:40px;
+    display:grid;    
+    grid-template-columns:1fr 1fr;
+
+`;
+
+export const TitlePrimayAndSecondDay = styled.p`
+
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 15px;
+        margin-bottom: 3px;
+
+`;
+
+export const IconAndMaxMinTemp = styled.div`
+    display:flex;
+    align-items:center;
+
+    p {
+        margin:0 10px;
+        font-size:18px;
+    }
+    svg{
+        width:60px;
+        height:60px;
+    }
+
+    svg + p {
+        color:var(--jadri-color-text-error);
+    }
+    p + p {
+        color:var(--jadri-color-5-hex);
+    }
+`;
+
+
+export const IconAndRestDaysWeather = styled.div`
+    display:flex;
+    align-items:center;
+
+    p {
+        margin:0 10px;
+        font-size:18px;
+    }
+    svg{
+        width:40px;
+        height:40px;
+    }
+
+    svg + p {
+        color:var(--jadri-color-text-error);
+    }
+    p + p {
+        color:var(--jadri-color-5-hex);
+    }
+`;
+
+
+export const RestInfoWeather = styled.div`
 
 
 
+`;
 
+export const ResumeWeather = styled.div`
+        color:var(--jadri-color-text-gray);
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 18px;
+        margin-bottom: 10px;
+
+`;
+
+export const MaximumHumidityAndMinimal = styled.div`
+    display:flex;
+    align-items:center;
+
+    div {
+        display:flex;
+        p{
+            margin:0 10px;
+            font-size: 14px;
+            font-weight: lighter;
+
+        }
+    }
+`;
+
+export const DirectionAndIntesivyOfWinds = styled.div`
+
+    display:flex;
+    align-items:center;
+    p {
+        margin:0 10px;
+        font-size: 14px;
+        font-weight: lighter;
+    }
+
+
+`;
+
+export const SectionCardsWeatherRestDays = styled.div`
+    margin-top:40px;
+    grid-gap:40px;
+    display:grid;    
+    grid-template-columns:1fr 1fr 1fr;
+
+`;
 

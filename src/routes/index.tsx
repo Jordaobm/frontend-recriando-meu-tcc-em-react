@@ -8,12 +8,15 @@ import SignUp from '../pages/SignUp';
 
 import Dashboard from '../pages/Dashboard';
 import Home from '../pages/Home';
+import Category from '../pages/Category';
 
 const Routes: React.FC = () => {
   return (
     <Switch>
 
       <Route path="/" exact component={Home} logged />
+      <Route path="/category/:category+" component={Category} logged />
+
       <Route path="/signin" component={SignIn} logged={false} />
       <Route path="/signup" component={SignUp} logged={false} />
 

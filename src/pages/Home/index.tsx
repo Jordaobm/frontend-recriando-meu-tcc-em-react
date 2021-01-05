@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import Header from '../../components/Header';
 import {
@@ -27,6 +27,16 @@ import {
     AgriculturalQuotation,
     TitleAgriculturalQuotation,
     AgriculturalQuotationContent,
+    CardWeatherPrimayAndSecondDay,
+    SectionCardsWeatherPrimaryAndSecondDay,
+    TitlePrimayAndSecondDay,
+    IconAndMaxMinTemp,
+    IconAndRestDaysWeather,
+    RestInfoWeather,
+    ResumeWeather,
+    MaximumHumidityAndMinimal,
+    DirectionAndIntesivyOfWinds,
+    SectionCardsWeatherRestDays,
 
 } from './styles';
 import parallaxImage from '../../assets/parallax-image-home.jpg';
@@ -34,7 +44,9 @@ import { Parallax } from 'react-parallax';
 import api from '../../services/api';
 import awesomeapi from '../../services/awesomeapi';
 import apiprevmet3 from '../../services/apiprevmet3';
+import { WiCloud, WiCloudy, WiHumidity, WiNightPartlyCloudy, WiNightRainMix, WiRain, WiStrongWind } from 'react-icons/wi';
 import { useToast } from '../../hooks/toast';
+import Footer from '../../components/Footer';
 
 interface Category {
     id: string;
@@ -56,9 +68,30 @@ interface WeatherResponse {
     4127858: Object
 }
 interface primaryAndSecondDaysWeather {
-    manha:{
-        dia_semana:string;
+    manha: {
+        dia_semana: string;
+        resumo: string;
+        temp_max: string;
+        temp_min: string;
+        dir_vento: string;
+        int_vento: string;
+        cod_icone: string;
+        umidade_max: string;
+        umidade_min: string;
+
     }
+}
+
+interface restDaysWeather {
+    dia_semana: string;
+    resumo: string;
+    temp_max: string;
+    temp_min: string;
+    dir_vento: string;
+    int_vento: string;
+    cod_icone: string;
+    umidade_max: string;
+    umidade_min: string;
 }
 
 const Home: React.FC = () => {
@@ -69,33 +102,60 @@ const Home: React.FC = () => {
 
     const [primaryAndSecondDaysWeatherState, setPrimaryAndSecondDaysWeather] = useState<primaryAndSecondDaysWeather[]>([])
 
-    const [restDaysWeatherState, setRestDaysWeatherState] = useState()
+    const [restDaysWeatherState, setRestDaysWeatherState] = useState<restDaysWeather[]>([])
 
 
     const { addToast } = useToast();
 
+    const getIcon = useCallback((cod_icone:string) => { 
+        console.log(cod_icone)
+        if(cod_icone == '37'){
+            return (<WiCloudy/>)
+        }
+
+        if(cod_icone == '36'){
+            return (<WiRain />)
+        }
+
+        if(cod_icone == '88'){
+            return (<WiNightRainMix/>)
+        }
+
+        if(cod_icone == '87'){
+            return (<WiCloudy/>)
+        }
+
+        if(cod_icone == '29'){
+            return (<WiNightPartlyCloudy/>)
+        }
+
+        
 
 
-    // useEffect(() => {
-    //     api.get('category').then(response => {
-    //         const data = response.data
-    //         setCategories(data)
-    //     }).catch(() => {
-    //         addToast({
-    //             title: 'Erro',
-    //             type: 'error',
-    //             description: 'Ocorreu um erro ao conectar com o servidor, tente novamente'
-    //         });
-    //     })
-    // }, [])
 
-    // useEffect(() => {
+    }, [])
 
-    //     awesomeapi.get<Coin[]>('/all/USD-BRL,EUR-BRL,BTC-BRL').then(response => {
-    //         const coins = Object.values(response.data)
-    //         setCoins(coins)
-    //     })
-    // }, [])
+
+    useEffect(() => {
+        api.get('category').then(response => {
+            const data = response.data
+            setCategories(data)
+        }).catch(() => {
+            addToast({
+                title: 'Erro',
+                type: 'error',
+                description: 'Ocorreu um erro ao conectar com o servidor, tente novamente'
+            });
+        })
+    }, [])
+
+    useEffect(() => {
+
+        awesomeapi.get<Coin[]>('/all/USD-BRL,EUR-BRL,BTC-BRL').then(response => {
+            const coins = Object.values(response.data)
+            setCoins(coins)
+        })
+    }, [])
 
     useEffect(() => {
         apiprevmet3.get<WeatherResponse>('/previsao/4127858').then(response => {
@@ -104,6 +164,7 @@ const Home: React.FC = () => {
             const restDaysWeather = data;
 
             setPrimaryAndSecondDaysWeather(primaryAndSecondDaysWeather)
+            setRestDaysWeatherState(restDaysWeather);
 
 
 
@@ -112,7 +173,8 @@ const Home: React.FC = () => {
         })
     }, [])
 
-    console.log(primaryAndSecondDaysWeatherState[1])
+    // console.log(primaryAndSecondDaysWeatherState[1])
+
 
 
 
@@ -144,7 +206,7 @@ const Home: React.FC = () => {
                             <CardCategory key={category.id}>
                                 <h3>{category.name}</h3>
                                 <p>são compostos químicos utilizados na agricultura para controlar o desenvolvimento de ervas daninhas. Essas plantas são eliminadas geralmente quando disputam certos recursos com as cultiváveis, como por exemplo, espaço, água, sais minerais, entre outros.</p>
-                                <Button><Link to={`product/category/${category.id}`} >Ver Produtos</Link></Button>
+                                <Button><Link to={`category/${category.id}`} >Ver Produtos</Link></Button>
                             </CardCategory>
                         ))}
 
@@ -201,18 +263,82 @@ const Home: React.FC = () => {
                         <Weather>
                             <TitleWeather>
                                 <h3>Previsão do Tempo</h3>
+                                <h5>em Três Barras do Paraná</h5>
                             </TitleWeather>
+
                             <WeatherContent>
-                                {primaryAndSecondDaysWeatherState.map(day=> (
-                                    <p key={primaryAndSecondDaysWeatherState.indexOf(day)}>{day.manha.dia_semana}</p>
-                                ))}
+
+                                <SectionCardsWeatherPrimaryAndSecondDay>
+
+                                    {primaryAndSecondDaysWeatherState.map(day => (
+                                        <CardWeatherPrimayAndSecondDay key={primaryAndSecondDaysWeatherState.indexOf(day)}>
+                                            <TitlePrimayAndSecondDay>{day.manha.dia_semana}</TitlePrimayAndSecondDay>
+                                            <IconAndMaxMinTemp>
+                                                {getIcon(day.manha.cod_icone)}
+                                                <p>{day.manha.temp_max}ºC</p>
+                                                <p>{day.manha.temp_min}ºC</p>
+                                            </IconAndMaxMinTemp>
+                                            <RestInfoWeather>
+                                                <ResumeWeather>{day.manha.resumo}</ResumeWeather>
+                                                <MaximumHumidityAndMinimal>
+                                                    <WiHumidity size={40} />
+                                                    <div><p>{day.manha.umidade_max}%</p>
+                                                        <p>{day.manha.umidade_min}%</p>
+                                                    </div>
+
+                                                </MaximumHumidityAndMinimal>
+                                                <DirectionAndIntesivyOfWinds>
+                                                    <WiStrongWind size={40} />
+                                                    <p>{day.manha.dir_vento}</p>
+                                                    <p>{day.manha.int_vento}</p>
+                                                </DirectionAndIntesivyOfWinds>
+                                            </RestInfoWeather>
+
+                                        </CardWeatherPrimayAndSecondDay>
+                                    ))}
+
+
+                                </SectionCardsWeatherPrimaryAndSecondDay>
+
+                                <SectionCardsWeatherRestDays>
+                                    {restDaysWeatherState.map(day => (
+                                        <CardWeatherPrimayAndSecondDay key={restDaysWeatherState.indexOf(day)}>
+                                            <TitlePrimayAndSecondDay style={{ fontSize: '16px' }}>{day.dia_semana}</TitlePrimayAndSecondDay>
+                                            <IconAndRestDaysWeather>
+                                                {getIcon(day.cod_icone)}
+                                                <p>{day.temp_max}ºC</p>
+                                                <p>{day.temp_min}ºC</p>
+                                            </IconAndRestDaysWeather>
+                                            <RestInfoWeather>
+                                                <MaximumHumidityAndMinimal>
+                                                    <WiHumidity size={20} />
+                                                    <div><p>{day.umidade_max}%</p>
+                                                        <p>{day.umidade_min}%</p>
+                                                    </div>
+
+                                                </MaximumHumidityAndMinimal>
+                                                <DirectionAndIntesivyOfWinds>
+                                                    <WiStrongWind size={20} />
+                                                    <p>{day.dir_vento}</p>
+                                                    <p>{day.int_vento}</p>
+                                                </DirectionAndIntesivyOfWinds>
+                                            </RestInfoWeather>
+
+                                        </CardWeatherPrimayAndSecondDay>
+                                    ))}
+                                </SectionCardsWeatherRestDays>
+
                             </WeatherContent>
+
+
                         </Weather>
 
                     </SectionWeatherAndAgriculturalQuotation>
                 </Container>
 
             </Body>
+
+            <Footer/>
 
         </>
     )

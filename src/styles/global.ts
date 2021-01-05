@@ -31,7 +31,7 @@ export default createGlobalStyle`
   
 /* Color Theme Swatches in Hex */
 
-  --jadri-color-1-hex: #FAFAFA;
+  --jadri-color-1-hex: white;
   --jadri-color-2-hex: #FAC255;
   --jadri-color-3-hex: #74DBD7;
   --jadri-color-4-hex: #8DDB46;
